@@ -1,0 +1,12 @@
+# https://hub.docker.com/r/ppc64le/fedora/
+FROM ppc64le/debian
+LABEL org.opencontainers.image.authors="githubfoam"
+
+
+RUN apt-get update -qy && \ 
+    apt-get dist-upgrade -yq && \
+    apt-get purge unattended-upgrades && \
+    apt-get clean all && \
+    apt-get clean all &&
+
+WORKDIR /tmp
