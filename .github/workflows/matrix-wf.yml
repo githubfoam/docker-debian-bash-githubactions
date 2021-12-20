@@ -10,20 +10,14 @@ on:
 
 jobs:
 
-  ubuntu-bullseye-latest-job:
-    name: "bullseye docker ubuntu latest"
+  ubuntu-latest-buster-job:
+    name: "buster docker ubuntu latest"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node:
          - openldap
         #  - modsecurity    
-    env:
-      distribution: "debian" #https://hub.docker.com/_/debian
-      version: "latest"
-      name: "debian/bullseye"
-      dockerfiledir: "dockerfiles"
-      dockerfilename: "Dockerfile.debian.bullseye"
     steps:
     - uses: actions/checkout@v2
     - name: "os fingerprinting"
@@ -35,7 +29,7 @@ jobs:
         cat /etc/issue
         cat /etc/os-release
         sudo apt-get install -y neofetch && neofetch   
-    - name: "run test"
+    - name: "build buster image matrix"
       run: |
         dir=$(pwd)
         cd $dir/dockerfiles/buster
@@ -47,6 +41,36 @@ jobs:
         echo "############################################"        
         docker build -t ${distribution}/${{matrix.node}} .    
 
+  ubuntu-latest-stretch-job:
+    name: "stretch docker ubuntu latest"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+         - openldap
+        #  - modsecurity    
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch   
+    - name: "build stretch image matrix"
+      run: |
+        dir=$(pwd)
+        cd $dir/dockerfiles/stretch
+        cd ${{matrix.node}}
+        echo "############################################"
+        echo "############################################"
+        echo "Building  ${{matrix.node}} dockerfile"
+        echo "############################################"
+        echo "############################################"        
+        docker build -t ${distribution}/${{matrix.node}} .
 
   # ubuntu-buster-latest-job:
   #   name: "buster docker ubuntu latest"
