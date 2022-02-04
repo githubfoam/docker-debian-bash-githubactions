@@ -10,4 +10,10 @@ RUN apt-get update -qy && \
 
 # CIS_Debian_Linux_10_Benchmark_v1.0.0
 # 1.1.1.1 Ensure mounting of freevxfs filesystems is disabled (Scored)
-RUN modprobe -n -v freevxfs
+
+#/bin/sh: 1: v: not found
+# RUN modprobe -n -v freevxfs 
+
+#Check $PATH and see whether modprobe is in $PATH
+RUN echo $PATH &&\
+    dpkg-query -L modprobe &&\
