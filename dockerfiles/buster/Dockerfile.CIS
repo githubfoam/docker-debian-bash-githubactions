@@ -3,17 +3,19 @@ FROM debian:buster
 LABEL org.opencontainers.image.authors="githubfoam"
 
 
-RUN apt-get update -qy && \ 
-    apt-get dist-upgrade -yq && \
+RUN apt-get update -y && \ 
+    apt-get dist-upgrade -y && \
     apt-get purge unattended-upgrades && \
     apt-get clean all
 
 # CIS_Debian_Linux_10_Benchmark_v1.0.0
 # 1.1.1.1 Ensure mounting of freevxfs filesystems is disabled (Scored)
 
-#/bin/sh: 1: v: not found
-# RUN modprobe -n -v freevxfs 
+#/bin/sh: 1: modprobe: not found
+RUN set -x apt-get update -y &&\
+    apt-get install kmod -y &&\
+    modprobe -n -v freevxfs 
 
 #Check $PATH and see whether modprobe is in $PATH
-RUN set -x echo $PATH &&\
+RUN set -ex echo $PATH &&\
     dpkg-query -L modprobe
