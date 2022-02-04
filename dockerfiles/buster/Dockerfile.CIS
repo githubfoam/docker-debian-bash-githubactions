@@ -1,0 +1,13 @@
+# https://wiki.debian.org/DebianReleases
+FROM debian:buster
+LABEL org.opencontainers.image.authors="githubfoam"
+
+
+RUN apt-get update -qy && \ 
+    apt-get dist-upgrade -yq && \
+    apt-get purge unattended-upgrades && \
+    apt-get clean all
+
+# CIS_Debian_Linux_10_Benchmark_v1.0.0
+# 1.1.1.1 Ensure mounting of freevxfs filesystems is disabled (Scored)
+RUN modprobe -n -v freevxfs
