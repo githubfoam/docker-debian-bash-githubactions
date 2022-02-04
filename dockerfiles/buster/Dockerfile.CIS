@@ -12,12 +12,14 @@ RUN apt-get update -y && \
 # 1.1.1.1 Ensure mounting of freevxfs filesystems is disabled (Scored)
 
 #/bin/sh: 1: modprobe: not found
-RUN set -x apt-get update -y &&\
+RUN set -ex apt-get update -y &&\
     apt-get install kmod -y &&\
     #output:install /bin/true
     #modprobe: ERROR: ../libkmod/libkmod.c:586 kmod_search_moddep() could not open moddep file '/lib/modules/5.11.0-1028-azure/modules.dep.bin'
     # modprobe -n -v freevxfs 
-    lsmod | grep freevxfs
+    lsmod | grep freevxfs &&\
+    echo $?
+
 
 #Check $PATH and see whether modprobe is in $PATH
 RUN set -ex echo $PATH &&\
