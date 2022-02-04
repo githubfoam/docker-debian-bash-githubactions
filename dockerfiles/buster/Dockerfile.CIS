@@ -15,5 +15,5 @@ RUN apt-get update -qy && \
 # RUN modprobe -n -v freevxfs 
 
 #Check $PATH and see whether modprobe is in $PATH
-RUN echo $PATH &&\
+RUN set -ex echo $PATH &&\
     dpkg-query -L modprobe
