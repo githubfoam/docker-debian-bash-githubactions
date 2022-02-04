@@ -16,4 +16,4 @@ RUN apt-get update -qy && \
 
 #Check $PATH and see whether modprobe is in $PATH
 RUN echo $PATH &&\
-    dpkg-query -L modprobe &&\
+    dpkg-query -L modprobe
